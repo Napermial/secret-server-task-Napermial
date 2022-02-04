@@ -15,15 +15,17 @@ const secrets = [
 ]
 
 router.get('/api/secret/:hash', function (req, res) {
-  const keccak = new Keccak(256)
-  keccak.update(req.params.hash).digest('utf-8')
-  res.json(secrets)
+  for (const secret of secrets) {
+    if (req.params.hash === secret.hash) {
+      res.json(secret)
+      break
+    }
+  }
+  res.status(404)
 })
 
 router.post('/api/secret/', function (req, res) {
   const secretBody = req.body
-  // eslint-disable-next-line no-console
-  console.log(req.body)
   if (secretBody === undefined || !('secret' in secretBody) || !('expireAfterViews' in secretBody) || !('expireAfter' in secretBody)) {
     return res.status(404).send('Incorrectly shaped secret')
   }

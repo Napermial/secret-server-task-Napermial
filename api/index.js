@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const app = express()
 
 // Require API routes
-const users = require('./routes/users')
+const users = require('./routes/secrets')
 
 // Import API Routes
 app.use(bodyParser.urlencoded({ extended: false }))
