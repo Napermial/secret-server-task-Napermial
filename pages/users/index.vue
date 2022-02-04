@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <Logo />
+      <Logo/>
       <h1 class="title">
         USERS
       </h1>
@@ -42,22 +42,22 @@ export default {
   align-items: center;
   text-align: center;
 }
-.title
-{
+
+.title {
   margin: 30px 0;
 }
-.users
-{
+
+.users {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.user
-{
+
+.user {
   margin: 10px 0;
 }
-.button
-{
+
+.button {
   display: inline-block;
   margin-top: 50px;
 }
