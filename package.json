@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxt/http": "latest",
+    "body-parser": "^1.19.1",
     "express": "latest",
     "nuxt": "latest",
     "sha3": "^2.1.4"
