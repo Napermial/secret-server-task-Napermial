@@ -46,13 +46,7 @@ router.post('/api/secret/', function (req, res) {
   }
 
   secrets.push(addSecret)
-  res.sendStatus(200)
-})
-
-router.get('/test', function (req, res) {
-  const keccak = new Keccak(256)
-  keccak.update('c7fd1d987ada439fc085cfa3c49416cf2b504ac50151e3c2335d60595cb90745')
-  res.json(new Date().toISOString())
+  res.send(addSecret)
 })
 
 module.exports = router
