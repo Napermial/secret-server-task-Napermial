@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 
 // Create express instance
 const app = express()
@@ -8,8 +7,8 @@ const app = express()
 const users = require('./routes/secrets')
 
 // Import API Routes
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(users)
 
 // Export express app
