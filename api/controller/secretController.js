@@ -24,8 +24,6 @@ function createSecret (req, res) {
   })
 
   secretNew.save((err, _) => {
-    // eslint-disable-next-line no-console
-    console.log(err)
     if (err) {
       return res.status(500).json({
         message: 'Error creating new record',
@@ -41,13 +39,10 @@ function createSecret (req, res) {
 module.exports.update = (req, res) => {
   Secret.findOne({ hash: req.params.hash }, (err, secret) => {
     if (err) {
-      // eslint-disable-next-line no-console
-      console.error(err)
-      return res.status(500).json(
-        {
-          message: 'Error updating record',
-          error: err
-        })
+      return res.status(500).json({
+        message: 'Server error when trying to update secret',
+        error: err.toString()
+      })
     }
     if (!secret) {
       return createSecret(req, res)

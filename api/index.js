@@ -1,4 +1,23 @@
 const express = require('express')
+const mongoose = require('mongoose')
+
+mongoose.connect(process.env.DATABASE_CONNECTION_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  waitQueueTimeoutMS: 1000
+}, (error) => {
+  if (error !== null) {
+    // eslint-disable-next-line no-console
+    console.error('Couldn\'t connect to mongoDB', error)
+  }
+})
+const db = mongoose.connection
+// eslint-disable-next-line no-console
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', function callback () {
+  // eslint-disable-next-line no-console
+  console.log('MongoDB Connected...')
+})
 
 // Create express instance
 const app = express()
