@@ -25,4 +25,4 @@ const Secret = new Schema({
   }
 })
 
-module.exports = mongoose.model('Article', Secret)
+module.exports = mongoose.model('Secret', Secret)

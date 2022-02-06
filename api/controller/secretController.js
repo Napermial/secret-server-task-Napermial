@@ -24,9 +24,11 @@ function createSecret (req, res) {
   })
 
   secretNew.save((err, _) => {
+    // eslint-disable-next-line no-console
+    console.log(err)
     if (err) {
       return res.status(500).json({
-        message: 'Error saving record',
+        message: 'Error creating new record',
         error: err
       })
     }
@@ -39,10 +41,13 @@ function createSecret (req, res) {
 module.exports.update = (req, res) => {
   Secret.findOne({ hash: req.params.hash }, (err, secret) => {
     if (err) {
-      return res.status(500).json({
-        message: 'Error saving record',
-        error: err
-      })
+      // eslint-disable-next-line no-console
+      console.error(err)
+      return res.status(500).json(
+        {
+          message: 'Error updating record',
+          error: err
+        })
     }
     if (!secret) {
       return createSecret(req, res)

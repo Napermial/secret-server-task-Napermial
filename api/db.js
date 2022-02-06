@@ -5,6 +5,8 @@ mongoose.connect(process.env.DATABASE_CONNECTION_STRING, {
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true
+}, (error) => {
+  console.error('Couldn\'t connect to mongoDB', error)
 })
 const db = mongoose.connection
 // eslint-disable-next-line no-console

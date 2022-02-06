@@ -3,8 +3,8 @@ const secretController = require('../controller/secretController')
 
 const router = Router()
 
-router.get('/api/secret/:hash', secretController.getFromHash)
+router.get('secret/:hash', secretController.getFromHash)
 
-router.post('/api/secret/', secretController.update)
+router.post('/secret/', secretController.update)
 
 module.exports = router
