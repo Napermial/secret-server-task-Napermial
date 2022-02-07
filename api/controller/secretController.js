@@ -10,13 +10,14 @@ function createSecret (req, res) {
   const keccak = new Keccak(256)
   const now = new Date()
   let expiresAtTime = new Date()
+  const hashed = keccak.update(secretBody.secret, 'utf-8').digest('hex')
 
   if (secretBody.expireAfter !== undefined) {
     expiresAtTime = new Date(now.getTime() + parseInt(secretBody.expireAfter) * 60000)
   }
 
   const secretNew = new Secret({
-    hash: keccak.update(secretBody.secret, 'utf-8').digest('hex'),
+    hash: hashed,
     secretText: secretBody.secret,
     createdAt: now.toISOString(),
     expiresAt: expiresAtTime,
@@ -31,6 +32,7 @@ function createSecret (req, res) {
       })
     }
     return res.json({
+      hash: hashed,
       message: 'saved'
     })
   })
@@ -100,7 +102,7 @@ module.exports.getFromHash = (req, res) => {
           message: 'No such record'
         })
       }
-      return secret
+      return res.json(secret)
     }
   )
 }

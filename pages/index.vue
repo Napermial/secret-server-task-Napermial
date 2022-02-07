@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
+      <Logo/>
       <h1 class="title">
         secret vault
       </h1>
@@ -33,10 +33,15 @@
         <input type="submit" value="save" @click="sendSecret">
       </div>
       <div v-if="secretHash">
-        <h2>{{ secretHash }}</h2>
+        <h2>you can send this link to share your sercet:</h2>
+        <br>
+        <h4>{{ secretUrl }}</h4>
+        <a :href="secretUrl">
+          link
+        </a>
       </div>
-      <Secret />
-      <div />
+      <Secret/>
+      <div/>
     </div>
   </div>
 </template>
@@ -51,12 +56,14 @@ export default {
       secretHash: '',
       secretMessage: '',
       expireAfterViews: 0,
-      expireAfter: 0
+      expireAfter: 0,
+      secretUrl: ''
     }
   },
   methods: {
-    async sendSecret () {
-      const response = await fetch(`${process.env.baseUrl}/api/secret/`, {
+    sendSecret () {
+      this.secretUrl = process.env.baseUrl + '/'
+      fetch(`${process.env.baseUrl}/api/secret/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -67,8 +74,15 @@ export default {
           expireAfter: this.expireAfter,
           expireAfterViews: this.expireAfterViews
         })
+      }).then((response) => {
+        return response.json()
+      }).then((res) => {
+        this.secretHash = res.hash
+        this.secretUrl += this.secretHash
+      }).catch((r) => {
+        // eslint-disable-next-line no-console
+        console.error(r)
       })
-      this.secretHash = response.hash
     }
   }
 }
@@ -101,7 +115,4 @@ export default {
   letter-spacing: 1px;
 }
 
-.links {
-  padding-top: 15px;
-}
 </style>

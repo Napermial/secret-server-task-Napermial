@@ -3,8 +3,7 @@ const mongoose = require('mongoose')
 
 mongoose.connect(process.env.DATABASE_CONNECTION_STRING, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-  waitQueueTimeoutMS: 1000
+  useUnifiedTopology: true
 }, (error) => {
   if (error !== null) {
     // eslint-disable-next-line no-console
