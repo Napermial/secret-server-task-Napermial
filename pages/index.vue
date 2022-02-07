@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <Logo/>
+      <Logo />
       <h1 class="title">
         secret vault
       </h1>
@@ -40,17 +40,14 @@
           link
         </a>
       </div>
-      <Secret/>
-      <div/>
+      <div />
     </div>
   </div>
 </template>
 
 <script>
-import Secret from '~/pages/secret/Secret'
 
 export default {
-  components: { Secret },
   data () {
     return {
       secretHash: '',
@@ -62,7 +59,7 @@ export default {
   },
   methods: {
     sendSecret () {
-      this.secretUrl = process.env.baseUrl + '/'
+      this.secretUrl = process.env.baseUrl + '/secret/'
       fetch(`${process.env.baseUrl}/api/secret/`, {
         method: 'POST',
         headers: {

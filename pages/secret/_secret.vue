@@ -1,5 +1,5 @@
 <template>
-  <div />
+  <h4>{{ $route.params.secret }}</h4>
 </template>
 
 <script>
