@@ -1,0 +1,11 @@
+services:
+  frontend:
+    image: node:16.13.2
+    command: bash -c "npm install && npm run dev"
+    volumes:
+      - ./../secret-server-task-Napermial:/var/www/app
+    working_dir: "/var/www/app"
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: 0.0.0.0
