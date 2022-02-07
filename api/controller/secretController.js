@@ -9,20 +9,24 @@ function createSecret (req, res) {
 
   const keccak = new Keccak(256)
   const now = new Date()
-  let expiresAtTime = new Date()
   const hashed = keccak.update(secretBody.secret, 'utf-8').digest('hex')
-
-  if (secretBody.expireAfter !== undefined) {
-    expiresAtTime = new Date(now.getTime() + parseInt(secretBody.expireAfter) * 60000)
-  }
-
-  const secretNew = new Secret({
+  let secretNew = new Secret({
     hash: hashed,
     secretText: secretBody.secret,
     createdAt: now.toISOString(),
-    expiresAt: expiresAtTime,
     remainingViews: secretBody.expireAfterViews
   })
+
+  if (secretBody.expireAfter !== undefined || secretBody.expireAfter !== 0) {
+    const expiresAtTime = new Date(now.getTime() + parseInt(secretBody.expireAfter) * 60000)
+    secretNew = new Secret({
+      hash: hashed,
+      secretText: secretBody.secret,
+      expiresAt: expiresAtTime,
+      createdAt: now.toISOString(),
+      remainingViews: secretBody.expireAfterViews
+    })
+  }
 
   secretNew.save((err, _) => {
     if (err) {
@@ -70,38 +74,48 @@ module.exports.update = (req, res) => {
   })
 }
 
-module.exports.delete = (req, res) => {
-  Secret.findOneAndRemove(
-    { hash: req.params.hash }, (err, secret) => {
-      if (err) {
-        return res.status(500).json({
-          message: 'Error deleting record',
-          error: err
-        })
-      }
-      if (!secret) {
-        res.status(404).json({
-          message: 'No such record'
-        })
-      }
-    }
-  )
-}
-
 module.exports.getFromHash = (req, res) => {
+  function deletedSecretResponse () {
+    return res.status(404).send()
+  }
+
   Secret.findOne(
     { hash: req.params.hash }, (err, secret) => {
       if (err) {
-        return res.status(500).json({
+        res.status(500).json({
           message: 'Error getting record',
           error: err
         })
+        return
       }
+
       if (!secret) {
-        res.status(404).json({
-          message: 'No such record'
+        return deletedSecretResponse()
+      }
+
+      if (secret.remainingViews === 1 || secret.expiresAt < Date.now()) {
+        Secret.findOneAndDelete({ hash: req.params.hash }, (err, secret) => {
+          if (err) {
+            res.status(500).json({
+              message: 'Error deleting record',
+              error: err
+            })
+            return
+          }
+          if (Date.parse(secret.expiresAt) < Date.now()) {
+            deletedSecretResponse()
+            return
+          }
+
+          res.json(secret).send()
         })
       }
+
+      if (secret.remainingViews > 1) {
+        secret.remainingViews -= 1
+        secret.save()
+      }
+
       return res.json(secret)
     }
   )

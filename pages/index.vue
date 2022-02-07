@@ -30,13 +30,13 @@
         <input v-model="expireAfter" type="number" required="required">
       </div>
       <div>
-        <input type="submit" value="save" @click="sendSecret">
+        <input class="button" type="submit" value="save" @click="sendSecret">
       </div>
       <div v-if="secretHash">
         <h2>you can send this link to share your sercet:</h2>
         <br>
         <h4>{{ secretUrl }}</h4>
-        <a :href="secretUrl">
+        <a class="button" :href="secretUrl">
           link
         </a>
       </div>
@@ -110,6 +110,17 @@ export default {
   font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
+}
+
+.button {
+  background-color: #e7e7e7;
+  color: black;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 
 </style>

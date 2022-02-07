@@ -17,7 +17,7 @@ const Secret = new Schema({
   },
   expiresAt: {
     type: Date,
-    required: true
+    required: false
   },
   remainingViews: {
     type: Number,
