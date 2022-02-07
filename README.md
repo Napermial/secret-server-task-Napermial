@@ -1,44 +1,35 @@
-<p align="center"><img width="328px" src="https://nuxtjs.org/logos/nuxt.svg"></p>
+# Secret sharing server with Nuxt and Express.js 
 
-
-# Nuxt.js with Express
-
-> [ExpressJS](http://expressjs.com/) + [Nuxt.js](https://nuxtjs.org) = :zap:
-
-Live Demo: [https://codesandbox.io/s/github/nuxt-community/express-template](https://codesandbox.io/s/github/nuxt-community/express-template)
+> [ExpressJS](http://expressjs.com/) + [Nuxt.js](https://nuxtjs.org) = 😁
 
 ## Installation
 
-This is a template project, click on the green button "Use this template" at the top of this page and get started with GitHub :sparkles:
+docker-compose:
+check to have docker installed, for Windows and Mac docker desktop includes docker compose.
+for linux please follow the instructions at https://docs.docker.com/compose/install/
 
-One you cloned your repository, install the dependencies with:
+after cloning the repository and pasting the .env file, app can start with
 
 ```bash
-yarn install # or npm install
+ docker-compose up
 ```
 
-## ExpressJS Changes
+Docker
 
-- There is a  `api` directory with the root of your `api` server.
-- The `routes` directory is called `api/routes`.
+An old fashioned Dockerfile is also provided - from my experience running the image from docker desktop resulted 
+in better performance. for this path
 
-## Commands
+```bash
+docker build . -t napermial/secret-server-task
+```
+this will create the image named napermial/secret-server-task and it will be available to run with
 
-| Command | Description |
-|---------|-------------|
-| npm run dev | Start ExpressJS server in development with Nuxt.js in dev mode (hot reloading). Listen on [http://localhost:3000](http://localhost:3000). |
-| npm run build | Build the nuxt.js web application for production. |
-| npm start | Start ExpressJS server in production. |
+```bash
+docker run -it -p 5000:5000 napermial/secret-server-task
+```
 
-## Examples
+in both cases the app is available from localhost:3000
 
-- [Handling Protected SSR Routes](https://github.com/nuxt/express/blob/master/protected-ssr-api.md)
-
-## Documentation
-
-- [ExpressJS](http://expressjs.com/en/guide/routing.html)
-- [Nuxt.js](https://nuxtjs.org/guide/)
-- [Vue.js](http://vuejs.org/guide/)
 
 ## Licenses
 
