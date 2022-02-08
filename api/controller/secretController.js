@@ -109,7 +109,6 @@ module.exports.getFromHash = (req, res) => {
 
           res.json(secret)
         })
-        return
       }
 
       if (secret.remainingViews > 1) {
