@@ -17,7 +17,7 @@ after cloning the repository and pasting the .env file, app can start with
 Docker
 
 An old fashioned Dockerfile is also provided - from my experience running the image from docker desktop resulted 
-in better performance. for this path
+in better performance for it is a production build of the project. for this path
 
 ```bash
 docker build . -t napermial/secret-server-task
