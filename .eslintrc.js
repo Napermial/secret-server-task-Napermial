@@ -7,14 +7,14 @@ module.exports = {
   },
   parserOptions: {
     parser: '@babel/eslint-parser',
-    ecmaVersion: "latest",
-    requireConfigFile:false
+    ecmaVersion: 'latest',
+    requireConfigFile: false,
+    allowImportExportEverywhere: true
   },
   extends: [
     '@nuxtjs',
     'plugin:nuxt/recommended'
   ],
   plugins: ['jest'],
-  rules: {
-  }
+  rules: {}
 }

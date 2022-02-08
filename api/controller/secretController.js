@@ -4,7 +4,7 @@ const Secret = require('../models/Secret')
 function createSecret (req, res) {
   const secretBody = req.body
   if (secretBody === undefined || !('secret' in secretBody) || !('expireAfterViews' in secretBody) || !('expireAfter' in secretBody)) {
-    return res.status(404).send('Incorrectly shaped secret')
+    return res.status(400).send('Incorrectly shaped secret')
   }
 
   const keccak = new Keccak(256)
@@ -107,8 +107,9 @@ module.exports.getFromHash = (req, res) => {
             return
           }
 
-          res.json(secret).send()
+          res.json(secret)
         })
+        return
       }
 
       if (secret.remainingViews > 1) {
@@ -116,7 +117,7 @@ module.exports.getFromHash = (req, res) => {
         secret.save()
       }
 
-      return res.json(secret)
+      res.json(secret)
     }
   )
 }
